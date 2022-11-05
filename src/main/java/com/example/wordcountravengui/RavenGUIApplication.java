@@ -7,7 +7,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * This is the main class for the Java FX application.
+ */
 public class RavenGUIApplication extends Application {
+    /**
+     * This is the start function that loads the fxml file, creates a scene, sets the title, and shows the stage.
+     * @param stage the start function accepts a blank stage to place the Java FX scene on
+     * @throws IOException the function will throw an IOException if the fxml file can not be loaded
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(RavenGUIApplication.class.getResource("raven-view.fxml"));
@@ -17,6 +25,10 @@ public class RavenGUIApplication extends Application {
         stage.show();
     }
 
+    /**
+     * The main function that launches the Java FX app.
+     * @param args Strings passed into the main method
+     */
     public static void main(String[] args) {
         launch();
     }

@@ -7,6 +7,9 @@ import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
 
+/**
+ * The controller class that handles input events for the Java FX app.
+ */
 public class RavenGUIController {
 
     @FXML
@@ -14,6 +17,10 @@ public class RavenGUIController {
     @FXML
     private Label count1, count2,count3,count4,count5,count6,count7,count8,count9,count10,count11,count12,count13,count14,count15,count16,count17,count18,count19,count20;
 
+    /**
+     * start button click event. This starts the Raven word count and prints the most found words to the labels.
+     * @throws FileNotFoundException Throws exception of the htm file can not be found.
+     */
     @FXML
     protected void onStartButtonClick() throws FileNotFoundException {
 
@@ -101,6 +108,10 @@ public class RavenGUIController {
         count20.setText(entries.get(entries.size()-20).getValue().toString());
 
     }
+
+    /**
+     * Clear button event. Clears the labels prior to running the word count again.
+     */
     @FXML
     protected void onClearButtonClick() {
 
