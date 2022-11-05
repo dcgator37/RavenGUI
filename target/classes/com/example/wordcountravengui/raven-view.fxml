@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<VBox alignment="TOP_LEFT" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.wordcountravengui.RavenGUIController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+
+<!--    <Label fx:id="welcomeText"/>-->
+    <Button text="Start the Raven Word Count!" onAction="#onStartButtonClick"/>
+    <Button text="Clear Form!" onAction="#onClearButtonClick"/>
+
+    <HBox spacing="2.0">
+        <Label fx:id="word1"/><Label fx:id="count1"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word2"/><Label fx:id="count2"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word3"/><Label fx:id="count3"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word4"/><Label fx:id="count4"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word5"/><Label fx:id="count5"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word6"/><Label fx:id="count6"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word7"/><Label fx:id="count7"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word8"/><Label fx:id="count8"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word9"/><Label fx:id="count9"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word10"/><Label fx:id="count10"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word11"/><Label fx:id="count11"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word12"/><Label fx:id="count12"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word13"/><Label fx:id="count13"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word14"/><Label fx:id="count14"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word15"/><Label fx:id="count15"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word16"/><Label fx:id="count16"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word17"/><Label fx:id="count17"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word18"/><Label fx:id="count18"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word19"/><Label fx:id="count19"/>
+    </HBox>
+    <HBox spacing="2.0">
+        <Label fx:id="word20"/><Label fx:id="count20"/>
+    </HBox>
+</VBox>
