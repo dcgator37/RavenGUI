@@ -7,6 +7,13 @@ import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 /**
  * The controller class that handles input events for the Java FX app.
  */
@@ -23,6 +30,24 @@ public class RavenGUIController {
      */
     @FXML
     protected void onStartButtonClick() throws FileNotFoundException {
+        String sql = "INSERT INTO word(word, occurrences) VALUES(?, ?)";
+        Connection con = null;
+
+        try {
+            String url = "jdbc:mysql://localhost:3306/word_occurrences?allowPublicKeyRetrieval=true&useSSL=false";
+            String username = "theboss";
+            String password = "theboss123";
+
+            con = DriverManager.getConnection(url, username, password);
+            System.out.println("Connected");
+
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("DELETE FROM word");
+
+        } catch (SQLException e) {
+
+            System.out.println(e);
+        }
 
         Scanner scanner = new Scanner(new File("1065-h.htm")).useDelimiter("\b(?<![</])(?!>)[^.?!]+[.!?]");
         Map<String, Integer> map = new HashMap<String, Integer>();
@@ -51,10 +76,131 @@ public class RavenGUIController {
                         } else {
                             map.put(wordLowerCase, 1);
                         }
+
+                        try {
+                            PreparedStatement pstq = con.prepareStatement("SELECT * FROM word WHERE word = '" + wordLowerCase + "'");
+                            ResultSet rs = pstq.executeQuery();
+
+                            if (!rs.next()) {
+
+                                PreparedStatement pst = con.prepareStatement(sql);
+                                pst.setString(1, wordLowerCase);
+                                pst.setInt(2,1);
+                                pst.executeUpdate();
+                            } else {
+                                int count = rs.getInt("occurrences");
+                                PreparedStatement pstu = con.prepareStatement("UPDATE word SET occurrences = ? WHERE word = ?");
+                                pstu.setInt(1,(count + 1));
+                                pstu.setString(2,wordLowerCase);
+                                pstu.executeUpdate();
+                            }
+                        } catch (SQLException ex) {
+                            System.out.println(ex);
+                        }
+
                     }
                 }
             }
         }
+
+        try {
+            PreparedStatement pstprint = con.prepareStatement("SELECT * FROM word ORDER BY occurrences DESC");
+            ResultSet rsprint = pstprint.executeQuery();
+            int i = 1;
+            while(rsprint.next() && i <= 20) {
+                String word = rsprint.getString("word");
+                int occurrences = rsprint.getInt("occurrences");
+                System.out.println(word + " : " + occurrences);
+
+                switch(i) {
+                    case 1:
+                        word1.setText(word);
+                        count1.setText(String.valueOf(occurrences));
+                        break;
+                    case 2:
+                        word2.setText(word);
+                        count2.setText(String.valueOf(occurrences));
+                        break;
+                    case 3:
+                        word3.setText(word);
+                        count3.setText(String.valueOf(occurrences));
+                        break;
+                    case 4:
+                        word4.setText(word);
+                        count4.setText(String.valueOf(occurrences));
+                        break;
+                    case 5:
+                        word5.setText(word);
+                        count5.setText(String.valueOf(occurrences));
+                        break;
+                    case 6:
+                        word6.setText(word);
+                        count6.setText(String.valueOf(occurrences));
+                        break;
+                    case 7:
+                        word7.setText(word);
+                        count7.setText(String.valueOf(occurrences));
+                        break;
+                    case 8:
+                        word8.setText(word);
+                        count8.setText(String.valueOf(occurrences));
+                        break;
+                    case 9:
+                        word9.setText(word);
+                        count9.setText(String.valueOf(occurrences));
+                        break;
+                    case 10:
+                        word10.setText(word);
+                        count10.setText(String.valueOf(occurrences));
+                        break;
+                    case 11:
+                        word11.setText(word);
+                        count11.setText(String.valueOf(occurrences));
+                        break;
+                    case 12:
+                        word12.setText(word);
+                        count12.setText(String.valueOf(occurrences));
+                        break;
+                    case 13:
+                        word13.setText(word);
+                        count13.setText(String.valueOf(occurrences));
+                        break;
+                    case 14:
+                        word14.setText(word);
+                        count14.setText(String.valueOf(occurrences));
+                        break;
+                    case 15:
+                        word15.setText(word);
+                        count15.setText(String.valueOf(occurrences));
+                        break;
+                    case 16:
+                        word16.setText(word);
+                        count16.setText(String.valueOf(occurrences));
+                        break;
+                    case 17:
+                        word17.setText(word);
+                        count17.setText(String.valueOf(occurrences));
+                        break;
+                    case 18:
+                        word18.setText(word);
+                        count18.setText(String.valueOf(occurrences));
+                        break;
+                    case 19:
+                        word19.setText(word);
+                        count19.setText(String.valueOf(occurrences));
+                        break;
+                    case 20:
+                        word20.setText(word);
+                        count20.setText(String.valueOf(occurrences));
+                        break;
+                }
+
+                ++i;
+            }
+        } catch(SQLException ex) {
+            System.out.println(ex);
+        }
+
 
         List<Map.Entry<String, Integer>> entries = new ArrayList<Entry<String,Integer>>( map.entrySet());
 
@@ -66,46 +212,46 @@ public class RavenGUIController {
             }
         });
 
-        word1.setText(entries.get(entries.size()-1).getKey());
-        count1.setText(entries.get(entries.size()-1).getValue().toString());
-        word2.setText(entries.get(entries.size()-2).getKey());
-        count2.setText(entries.get(entries.size()-2).getValue().toString());
-        word3.setText(entries.get(entries.size()-3).getKey());
-        count3.setText(entries.get(entries.size()-3).getValue().toString());
-        word4.setText(entries.get(entries.size()-4).getKey());
-        count4.setText(entries.get(entries.size()-4).getValue().toString());
-        word5.setText(entries.get(entries.size()-5).getKey());
-        count5.setText(entries.get(entries.size()-5).getValue().toString());
-        word6.setText(entries.get(entries.size()-6).getKey());
-        count6.setText(entries.get(entries.size()-6).getValue().toString());
-        word7.setText(entries.get(entries.size()-7).getKey());
-        count7.setText(entries.get(entries.size()-7).getValue().toString());
-        word8.setText(entries.get(entries.size()-8).getKey());
-        count8.setText(entries.get(entries.size()-8).getValue().toString());
-        word9.setText(entries.get(entries.size()-9).getKey());
-        count9.setText(entries.get(entries.size()-9).getValue().toString());
-        word10.setText(entries.get(entries.size()-10).getKey());
-        count10.setText(entries.get(entries.size()-10).getValue().toString());
-        word11.setText(entries.get(entries.size()-11).getKey());
-        count11.setText(entries.get(entries.size()-11).getValue().toString());
-        word12.setText(entries.get(entries.size()-12).getKey());
-        count12.setText(entries.get(entries.size()-12).getValue().toString());
-        word13.setText(entries.get(entries.size()-13).getKey());
-        count13.setText(entries.get(entries.size()-13).getValue().toString());
-        word14.setText(entries.get(entries.size()-14).getKey());
-        count14.setText(entries.get(entries.size()-14).getValue().toString());
-        word15.setText(entries.get(entries.size()-15).getKey());
-        count15.setText(entries.get(entries.size()-15).getValue().toString());
-        word16.setText(entries.get(entries.size()-16).getKey());
-        count16.setText(entries.get(entries.size()-16).getValue().toString());
-        word17.setText(entries.get(entries.size()-17).getKey());
-        count17.setText(entries.get(entries.size()-17).getValue().toString());
-        word18.setText(entries.get(entries.size()-18).getKey());
-        count18.setText(entries.get(entries.size()-18).getValue().toString());
-        word19.setText(entries.get(entries.size()-19).getKey());
-        count19.setText(entries.get(entries.size()-19).getValue().toString());
-        word20.setText(entries.get(entries.size()-20).getKey());
-        count20.setText(entries.get(entries.size()-20).getValue().toString());
+//        word1.setText(entries.get(entries.size()-1).getKey());
+//        count1.setText(entries.get(entries.size()-1).getValue().toString());
+//        word2.setText(entries.get(entries.size()-2).getKey());
+//        count2.setText(entries.get(entries.size()-2).getValue().toString());
+//        word3.setText(entries.get(entries.size()-3).getKey());
+//        count3.setText(entries.get(entries.size()-3).getValue().toString());
+//        word4.setText(entries.get(entries.size()-4).getKey());
+//        count4.setText(entries.get(entries.size()-4).getValue().toString());
+//        word5.setText(entries.get(entries.size()-5).getKey());
+//        count5.setText(entries.get(entries.size()-5).getValue().toString());
+//        word6.setText(entries.get(entries.size()-6).getKey());
+//        count6.setText(entries.get(entries.size()-6).getValue().toString());
+//        word7.setText(entries.get(entries.size()-7).getKey());
+//        count7.setText(entries.get(entries.size()-7).getValue().toString());
+//        word8.setText(entries.get(entries.size()-8).getKey());
+//        count8.setText(entries.get(entries.size()-8).getValue().toString());
+//        word9.setText(entries.get(entries.size()-9).getKey());
+//        count9.setText(entries.get(entries.size()-9).getValue().toString());
+//        word10.setText(entries.get(entries.size()-10).getKey());
+//        count10.setText(entries.get(entries.size()-10).getValue().toString());
+//        word11.setText(entries.get(entries.size()-11).getKey());
+//        count11.setText(entries.get(entries.size()-11).getValue().toString());
+//        word12.setText(entries.get(entries.size()-12).getKey());
+//        count12.setText(entries.get(entries.size()-12).getValue().toString());
+//        word13.setText(entries.get(entries.size()-13).getKey());
+//        count13.setText(entries.get(entries.size()-13).getValue().toString());
+//        word14.setText(entries.get(entries.size()-14).getKey());
+//        count14.setText(entries.get(entries.size()-14).getValue().toString());
+//        word15.setText(entries.get(entries.size()-15).getKey());
+//        count15.setText(entries.get(entries.size()-15).getValue().toString());
+//        word16.setText(entries.get(entries.size()-16).getKey());
+//        count16.setText(entries.get(entries.size()-16).getValue().toString());
+//        word17.setText(entries.get(entries.size()-17).getKey());
+//        count17.setText(entries.get(entries.size()-17).getValue().toString());
+//        word18.setText(entries.get(entries.size()-18).getKey());
+//        count18.setText(entries.get(entries.size()-18).getValue().toString());
+//        word19.setText(entries.get(entries.size()-19).getKey());
+//        count19.setText(entries.get(entries.size()-19).getValue().toString());
+//        word20.setText(entries.get(entries.size()-20).getKey());
+//        count20.setText(entries.get(entries.size()-20).getValue().toString());
 
     }
 
